@@ -1,116 +1,150 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let themes = {
-      animaux: ['koala.jpg', 'lion.jpg', 'elephant.jpg'], // Array of image filenames for "Animaux"
-      fruits_legumes: ['apple.jpg', 'banana.jpg', 'carrot.jpg'], // Example for "Fruits & Légumes"
-      monuments: ['eiffel_tower.jpg', 'statue_of_liberty.jpg', 'pyramids.jpg'] // Example for "Monuments"
-    };
-  
-    let correctAnswers = {
-      'koala.jpg': 'koala',
-      'lion.jpg': 'lion',
-      'elephant.jpg': 'elephant',
-      'apple.jpg': 'apple',
-      'banana.jpg': 'banana',
-      'carrot.jpg': 'carrot',
-      'eiffel_tower.jpg': 'eiffel tower',
-      'statue_of_liberty.jpg': 'statue of liberty',
-      'pyramids.jpg': 'pyramids'
-    };
-  
     let currentTheme = '';
     let currentImageIndex = 0;
     let score = 0;
     let timerInterval;
     let timeLeft = 30;
-  
+    let currentAnswers = [];
+
     const gameContainer = document.getElementById('game-container');
     const gameImage = document.getElementById('game-image');
     const timerDisplay = document.getElementById('time');
     const scoreDisplay = document.getElementById('score-count');
     const guessInput = document.getElementById('guess-input');
     const errorMessage = document.getElementById('error-message');
-  
-    // Function to start the game with the selected theme
-    function startGame(theme, button) {
-      currentTheme = theme;
-      currentImageIndex = 0;
-      score = 0;
-      timeLeft = 30;
-  
-      scoreDisplay.textContent = score;
-      showImage();
-      gameContainer.style.display = 'block';
-      startTimer();
+    const themeSelectionDiv = document.getElementById('theme-selection');
 
-      button.disabled = true;
-      button.style.backgroundColor = '#d3d3d3'; // Graying out the button
-      button.style.cursor = 'not-allowed';
+    const getThemes = async () => {
+        const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9teXVjb2p5YWxwZGRwZ21ua2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg1NDc3ODEsImV4cCI6MjA0NDEyMzc4MX0.HEywW3UJjYSrSTyqMsRCk7HcXKFweSertdVGidkm91U"
+        const header = new Headers({
+          'Content-Type': 'application/json',
+          'apikey': apiKey
+        });
+        const response = await fetch('https://omyucojyalpddpgmnklt.supabase.co/rest/v1/themes', {
+          method: 'GET',
+          headers: header
+        });
+      
+        const data = await response.json();
+        console.log(data);
+
+        populateThemes(data);
+
+        return data;
+    };
+
+    function populateThemes(apiData) {
+        apiData.forEach(themeData => {
+            const button = document.createElement('button');
+            button.classList.add('theme-button');
+            
+            // Clean up the theme name (remove newline or extra spaces)
+            const themeName = themeData.name.trim();
+            button.textContent = themeName.toUpperCase(); // Display name in uppercase
+            button.setAttribute('data-theme-id', themeData.id);
+
+            // Add click event listener to the button
+            button.addEventListener('click', function() {
+                if (!button.classList.contains('disabled')) {
+                    startGame(themeData, button);
+                }
+            });
+
+            // Append the button to the theme selection div
+            themeSelectionDiv.appendChild(button);
+        });
     }
-  
-    // Show the current image based on the selected theme
-    function showImage() {
-      const themeImages = themes[currentTheme];
-      if (currentImageIndex < themeImages.length) {
-        gameImage.src = `images/${themeImages[currentImageIndex]}`;
-      } else {
-        endGame();
-      }
-    }
-  
-    // Function to handle the user guess
-    function checkGuess() {
-      const guess = guessInput.value.toLowerCase();
-      const currentImage = themes[currentTheme][currentImageIndex];
-      if (guess === correctAnswers[currentImage].toLowerCase()) {
-        score++;
+
+    function startGame(themeData, button) {
+        currentTheme = themeData;
+        console.log(currentTheme);
+        currentAnswers = Object.entries(themeData.answers); // Get the answers as an array of [key, value] pairs
+        currentImageIndex = 0;
+        score = 0;
+        timeLeft = 30;
+    
         scoreDisplay.textContent = score;
-        currentImageIndex++;
-        errorMessage.textContent = '';  // Clear any error message when the guess is correct
-        guessInput.value = '';
         showImage();
-      } else {
-        errorMessage.textContent = 'Incorrecte! Essaye encore ou passe à l\'image suivante.';
+        gameContainer.style.display = 'block';
+        startTimer();
+    
+        // Disable the theme button after the game starts
+        button.disabled = true;
+        button.classList.add('disabled'); // Graying out the button
       }
-    }
-
-    function skipImage() {
+    
+      // Show the current image based on the selected theme
+      function showImage() {
+        if (currentImageIndex < currentAnswers.length) {
+          const [answer, image] = currentAnswers[currentImageIndex];
+          gameImage.src = `images/${image}`;
+          errorMessage.textContent = ''; // Clear any previous error messages
+        } else {
+          endGame();
+        }
+      }
+    
+      // Function to handle the user guess
+      function checkGuess() {
+        const guess = guessInput.value.toLowerCase();
+        const [correctAnswer, image] = currentAnswers[currentImageIndex]; // Get the current correct answer
+        
+        if (guess === correctAnswer.toLowerCase()) {
+          score++;
+          scoreDisplay.textContent = score;
+          errorMessage.textContent = '';  // Clear any error message when the guess is correct
+          currentImageIndex++;
+          guessInput.value = '';
+          showImage();
+        } else {
+          errorMessage.textContent = 'Incorrect! Try again or skip the image.';
+        }
+      }
+    
+      // Function to skip the current image without affecting the score
+      function skipImage() {
         currentImageIndex++;
         guessInput.value = '';
         errorMessage.textContent = ''; // Clear any previous error messages
         showImage();
-    }
-  
-    // Function to start the timer
-    function startTimer() {
-      timerInterval = setInterval(function() {
-        timeLeft--;
-        timerDisplay.textContent = timeLeft;
-        if (timeLeft <= 0) {
-          endGame();
-        }
-      }, 1000);
-    }
-  
-    // Function to end the game
-    function endGame() {
-      clearInterval(timerInterval);
-      alert('Game over! Your score: ' + score);
-      gameContainer.style.display = 'none';
-    }
-  
-    // Attach event listener to theme buttons
-    const themeButtons = document.querySelectorAll('.theme-button');
-    themeButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const theme = this.getAttribute('data-theme');
-        if (!this.disabled) {
-            startGame(theme, this);
+      }
+    
+      // Function to start the timer
+      function startTimer() {
+        timerInterval = setInterval(function() {
+          timeLeft--;
+          timerDisplay.textContent = timeLeft;
+          if (timeLeft <= 0) {
+            endGame();
           }
-      });
-    });
-  
-    // Event listener for submitting guesses
-    document.getElementById('submit-guess').addEventListener('click', checkGuess);
-    document.getElementById('skip-image').addEventListener('click', skipImage);
+        }, 1000);
+      }
+    
+      // Function to end the game
+      function endGame() {
+        clearInterval(timerInterval);
+        alert('Game over! Your score: ' + score);
+        gameContainer.style.display = 'none';
+    
+        // Disable the theme after the game finishes
+        disableThemeButton(currentTheme.id);
+      }
+    
+      // Disable the theme button after a theme is finished
+      function disableThemeButton(themeId) {
+        const themeButton = document.querySelector(`[data-theme-id="${themeId}"]`);
+        if (themeButton) {
+          themeButton.disabled = true;
+          themeButton.classList.add('disabled'); // Grayed out
+        }
+      }
+    
+      // Event listener for submitting guesses
+      document.getElementById('submit-guess').addEventListener('click', checkGuess);
+    
+      // Event listener for skipping images
+      document.getElementById('skip-image').addEventListener('click', skipImage);
+
+    getThemes();
   });
   
