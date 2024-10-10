@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const guessInput = document.getElementById('guess-input');
     const errorMessage = document.getElementById('error-message');
     const themeSelectionDiv = document.getElementById('theme-selection');
+    const endGameModal = document.getElementById('end-game-modal'); // Modal
+    const finalScoreDisplay = document.getElementById('final-score'); // Score in modal
+    const playAgainButton = document.getElementById('play-again');
 
     const getThemes = async () => {
         const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9teXVjb2p5YWxwZGRwZ21ua2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg1NDc3ODEsImV4cCI6MjA0NDEyMzc4MX0.HEywW3UJjYSrSTyqMsRCk7HcXKFweSertdVGidkm91U"
@@ -120,14 +123,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
       }
     
-      // Function to end the game
       function endGame() {
         clearInterval(timerInterval);
-        alert('Game over! Your score: ' + score);
         gameContainer.style.display = 'none';
-    
-        // Disable the theme after the game finishes
-        disableThemeButton(currentTheme.id);
+        showEndGameModal(); // Show cool modal
+      }
+
+      function showEndGameModal() {
+        finalScoreDisplay.textContent = score; // Set final score
+        endGameModal.style.display = 'flex'; // Show the modal
       }
     
       // Disable the theme button after a theme is finished
@@ -138,6 +142,10 @@ document.addEventListener('DOMContentLoaded', function() {
           themeButton.classList.add('disabled'); // Grayed out
         }
       }
+
+      playAgainButton.addEventListener('click', function() {
+        endGameModal.style.display = 'none'; // Hide modal
+      });
     
       // Event listener for submitting guesses
       document.getElementById('submit-guess').addEventListener('click', checkGuess);
