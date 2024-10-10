@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic-Tac-Toe with Webcam</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Tic-Tac-Toe (Morpion) with Webcam</h1>
+
+  <!-- Player 1 Section -->
+  <div class="player-section">
+    <h2 id="player1-name-display">Player 1</h2>
+    <input type="text" id="player1-name-input" placeholder="Enter Player 1 Name" />
+    <div class="video-photo-container">
+      <video id="player1-video" autoplay></video>
+      <div id="player1-photo-display" class="photo-display"></div>
+    </div>
+    <button id="player1-capture">Capture Player 1</button>
+  </div>
+
+  <!-- Player 2 Section -->
+  <div class="player-section">
+    <h2 id="player2-name-display">Player 2</h2>
+    <input type="text" id="player2-name-input" placeholder="Enter Player 2 Name" />
+    <div class="video-photo-container">
+      <video id="player2-video" autoplay></video>
+      <div id="player2-photo-display" class="photo-display"></div>
+    </div>
+    <button id="player2-capture">Capture Player 2</button>
+  </div>
+
+  <!-- Tic-Tac-Toe Grid -->
+  <div class="game-container">
+    <div class="grid">
+      <div class="cell" data-index="0"></div>
+      <div class="cell" data-index="1"></div>
+      <div class="cell" data-index="2"></div>
+      <div class="cell" data-index="3"></div>
+      <div class="cell" data-index="4"></div>
+      <div class="cell" data-index="5"></div>
+      <div class="cell" data-index="6"></div>
+      <div class="cell" data-index="7"></div>
+      <div class="cell" data-index="8"></div>
+    </div>
+  </div>
+
+  <!-- Game Status -->
+  <div class="status">
+    <p id="game-status">Enter your names and take your photos!</p>
+  </div>
+
+  <button id="restart-button">Restart Game</button>
+
+  <script src="main.js"></script>
+</body>
+</html>

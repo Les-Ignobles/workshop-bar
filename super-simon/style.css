@@ -31,7 +31,7 @@ body {
     height: 100px;
     background-color: #ddd;
     border-radius: 20px;
-    opacity: 0.5;
+    opacity: 0.2;
     transition: opacity 0.3s, box-shadow 0.3s;
     cursor: pointer;
     border: 5px solid #111; /* Darker border to blend with dark theme */
