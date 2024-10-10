@@ -3,36 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fun Ethylotest</title>
   <link rel="stylesheet" href="style.css">
-  <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
-  <title>Ethilotest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>OpenAI GPT-3</h1>
-<p>Coucou mec</p>
-<div class="drink-card">
-  <h2>Mojito</h2>
-</div>
-<div class="swiper">
-  <!-- Additional required wrapper -->
-  <div class="swiper-wrapper">
+  <div class="container">
+    <h1>Fun Ethylotest</h1>
+    <p id="instructions">Notre robot va te dire si tu peux prendre le volant</p>
 
+    <div class="video-container">
+      <video id="video" autoplay></video>
+      <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+
+    <button id="start-btn">C'est parti</button>
+    <p id="countdown"></p>
+
+    <div class="result-container">
+      <h2 id="result-message"></h2>
+      <img id="captured-photo" src="" alt="Captured photo" style="display:none;">
+    </div>
   </div>
-  <!-- If we need pagination -->
-  <div class="swiper-pagination"></div>
 
-  <!-- If we need navigation buttons -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-
-  <!-- If we need scrollbar -->
-  <div class="swiper-scrollbar"></div>
-</div>
-
+  <script src="main.js"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="main.js"></script>
 </html>

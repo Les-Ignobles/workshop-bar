@@ -1,8 +1,63 @@
 body {
-  background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #0C2537;
+
+  font-family: "DM Serif Text", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.swiper {
-  width: 600px;
-  height: 300px;
+.container {
+  text-align: center;
+  background-color: antiquewhite;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+.video-container {
+  margin: 20px 0;
+  position: relative;
+}
+
+video {
+  width: 300px;
+  height: 225px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+#countdown {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff0000;
+}
+
+#result-message {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#captured-photo {
+  margin-top: 20px;
+  border-radius: 10px;
 }
