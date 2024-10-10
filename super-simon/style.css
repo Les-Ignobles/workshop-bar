@@ -18,10 +18,11 @@ body {
     font-size: 24px;
   }
   
-  .simon-board {
-    display: grid;
-    grid-template-columns: repeat(2, 150px);
+  #simon-board {
+    display: flex;
     gap: 10px;
+    flex-wrap: wrap;
+    width: 500px;
   }
   
   .simon-button {
@@ -34,22 +35,6 @@ body {
   
   .active {
     opacity: 1;
-  }
-  
-  .green {
-    background-color: green;
-  }
-  
-  .red {
-    background-color: red;
-  }
-  
-  .yellow {
-    background-color: yellow;
-  }
-  
-  .blue {
-    background-color: blue;
   }
   
   #start-button {

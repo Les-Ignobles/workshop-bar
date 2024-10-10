@@ -1,11 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const simonButtons = {
-      green: document.getElementById('green'),
-      red: document.getElementById('red'),
-      yellow: document.getElementById('yellow'),
-      blue: document.getElementById('blue'),
-    };
-  
+    const simonBoard = document.getElementById('simon-board');
     const startButton = document.getElementById('start-button');
     const currentScoreDisplay = document.getElementById('current-score');
     const highScoreDisplay = document.getElementById('high-score');
@@ -15,6 +9,51 @@ document.addEventListener('DOMContentLoaded', function() {
     let score = 0;
     let highScore = 0;
     let inGame = false;
+    let simonButtons = {}; // To store dynamically created buttons
+
+    const getColors = async () => {
+        const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9teXVjb2p5YWxwZGRwZ21ua2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg1NDc3ODEsImV4cCI6MjA0NDEyMzc4MX0.HEywW3UJjYSrSTyqMsRCk7HcXKFweSertdVGidkm91U"
+        const header = new Headers({
+          'Content-Type': 'application/json',
+          'apikey': apiKey
+        });
+
+        const response = await fetch('https://omyucojyalpddpgmnklt.supabase.co/rest/v1/colors', {
+          method: 'GET',
+          headers: header
+        });
+      
+        const data = await response.json();
+        console.log(data);
+
+        createSimonBoard(data);
+
+        return data;
+    };
+
+    function createSimonBoard(apiData) {
+        apiData.forEach((colorData) => {
+          const colorName = colorData.name.trim(); // Clean up the name
+          const button = document.createElement('div');
+          button.id = colorName;
+          button.style.backgroundColor = colorName; // Add color name as class
+          button.classList.add('simon-button'); // Add color name as class
+    
+          // Add event listener for clicks on each button
+          button.addEventListener('click', () => {
+            handlePlayerInput(colorName);
+            lightUpButton(colorName);
+          });
+    
+          console.log(colorData);
+          console.log(simonBoard);
+          // Append button to the simon-board
+          simonBoard.appendChild(button);
+    
+          // Save reference to the button in the simonButtons object
+          simonButtons[colorName] = button;
+        });
+      }
   
     // Utility function to play button light-up animation
     function lightUpButton(color) {
@@ -97,5 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Start button listener
     startButton.addEventListener('click', startGame);
+    getColors();
   });
   
