@@ -17,24 +17,14 @@ const getDrinks = async () => {
 
 const initSlider = () => {
   const swiper = new Swiper('.swiper', {
-    // Optional parameters
     direction: 'horizontal',
     loop: true,
-
-    // If we need pagination
     pagination: {
       el: '.swiper-pagination',
     },
-
-    // Navigation arrows
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
-    },
-
-    // And if we need scrollbar
-    scrollbar: {
-      el: '.swiper-scrollbar',
     },
   });
 }
@@ -47,10 +37,16 @@ getDrinks().then((drinks) => {
     const drinkElement = document.createElement('div');
     drinkElement.classList.add('swiper-slide');
     drinkElement.innerHTML = `
-    <div class="drink">
-      <img class="cocktail-img" src="${drink.image}" alt="${drink.name}" />
-      <h2>${drink.name}</h2>
-      <p>${drink.description}</p>
+    <div class="drink-card">
+    <div class="drink-card-content">
+      <img class="drink-card-content-img" src="${drink.image}" alt="${drink.title}" />
+      <div class="drink-card-content-infos">
+      <h2 class="drink-card-content-title">${drink.title}</h2>
+      <h2 class="drink-card-content-price">${drink.price}€</h2>
+      </div>
+      
+      <p  class="drink-card-content-desc">${drink.description}</p>
+      </div>
     </div>
     `;
     drinksContainer.appendChild(drinkElement);
