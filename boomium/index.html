@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>La Grille Game</h1>
+
+    <div id="theme-selection"></div>
+      
+    <div class="game-container" id="game-container">
+        <div id="timer">Time Left: <span id="time">30</span>s</div>
+        <div id="score">Score: <span id="score-count">0</span></div>
+        
+        <div class="image-display">
+            <img id="game-image" src="" alt="game image">
+        </div>
+        
+        <input type="text" id="guess-input" placeholder="Enter your guess...">
+        <button id="submit-guess">Submit</button>
+        <button id="skip-image">Skip</button>
+    </div>
+    <div id="error-message" style="color: red; font-size: 18px;"></div>
+</body>
+<script src="main.js"></script>
+</html>
