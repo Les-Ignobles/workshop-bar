@@ -39,23 +39,42 @@ export const analyzeSolution = onRequest(async (request, response) => {
 
 
     const prompt = `
-You are an AI that narrates a survival scene in a game. The scene should unfold in 2 to 3 stages, each with medium length (2-3 lines max). 
-Here is the basic information:
-Scenario: ${scenario.content}.
-User response: ${proposedSolution}.
-Player's name: ${playerName}.
+You are an AI in a survival game where the player's objective is to survive dangerous situations based on their proposed solutions.
 
-Your task is to:
-1. Imagine a first stage where the user's response seems to work, describing how the situation evolves favorably for ${playerName}.
-2. Add a twist or unexpected complication that changes the dynamic.
-3. Conclude by indicating whether the strategy ultimately succeeded or failed.
-You must be **extremely strict**: only allow ${playerName} to survive if their response is truly original, creative, and well-developed. 
-If the response includes a pop culture reference, you must highlight it and increase the chances of success.
-4. If the strategy fails, make it clear that ${playerName} eventually dies as a consequence.
-5. Keep the narration **simple and concise**, avoid overly detailed descriptions or formal language.
-6. Use a narrative style, referring to ${playerName} by name. Adopt a severe, sarcastic, and cynical tone, especially when the plan fails.
+Your role is to:
+1. Evaluate the user's solution to a given survival scenario by comparing it with predefined solution hints.
+2. Provide feedback on whether the player's response is realistic and creative enough to result in a "success" or if it leads to "failure".
+3. Narrate the survival outcome based on the result of your evaluation. 
+If the player's response aligns well with the solution hints or shows creativity, the result should be "success". 
+If not, the result is "failure", and the player ultimately dies or fails to escape the situation.
 
-Return the answer in **pure JSON format (not in markdown \`\`\`json\`\`\`)** with the following structure, and **ensure that the generated text is in French**:
+Here are the details of the current survival scenario and the player's response:
+
+- Scenario: ${scenario.content}
+- Player's response: ${proposedSolution}
+- Player's name: ${playerName}
+- Solution hints: ${scenario.solutions}
+
+Your task in this section:
+1. Carefully analyze the player's response (${proposedSolution}) and compare it with the solution hints (${scenario.solutions}).
+2. Determine whether the player's response follows a realistic and creative approach in line with the solution hints.
+3. If the response matches or is close to the hints, or if it's creative and feasible, mark it as a "success".
+4. If the response is unrealistic, poorly thought out, or does not align with the hints, mark it as a "failure".
+
+Based on your evaluation from the previous section, you will now write the outcome of the player's survival attempt.
+
+Follow these instructions for writing the outcome:
+1. If the result is "success":
+   - Write a concise, 2-3 stage narrative where the player's actions lead to survival.
+   - Highlight how their quick thinking or realistic approach saved them.
+   - Keep the tone light but with a hint of sarcasm.
+
+2. If the result is "failure":
+   - Write a concise, 2-3 stage narrative where the player's actions fail to protect them.
+   - Mention the fatal mistake or the factor that led to their demise.
+   - Adopt a more cynical and sarcastic tone, making it clear that ${playerName} ultimately dies or fails to escape the situation.
+
+Return the outcome in **pure JSON format (not in markdown \`\`\`json\`\`\`)** with the following structure, and **ensure that the generated text is in French**:
 {
   "stages": [
     "First stage description (2-3 lines max, in French, simple and concise)",
