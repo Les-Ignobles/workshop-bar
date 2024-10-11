@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  h1 {
+    margin-top: 20px;
+    font-size: 2.5rem;
+  }
+  
+  .player-section {
+    margin: 20px 0;
+  }
+  
+  .video-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  video {
+    border: 2px solid #333;
+    width: 150px;
+    height: 150px;
+  }
+  
+  .photo-display {
+    width: 150px;
+    height: 150px;
+    margin-left: 20px;
+    border: 2px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+  }
+  
+  .photo-display img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  input[type="text"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 16px;
+    width: 80%;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .cell {
+    width: 100px;
+    height: 100px;
+    background-color: #87ceeb;
+    border: 2px solid #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cell img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  .status {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
