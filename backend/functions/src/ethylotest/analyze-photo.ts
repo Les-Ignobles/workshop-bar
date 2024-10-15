@@ -1,6 +1,5 @@
 import {onRequest} from "firebase-functions/v2/https";
 import {OpenaiClient} from "../shared/client/openai-client";
-import {SupabaseClient} from "../shared/client/supabase-client";
 
 export const analyzePhoto = onRequest(async (request, response) => {
     const iaClient = new OpenaiClient().client();
