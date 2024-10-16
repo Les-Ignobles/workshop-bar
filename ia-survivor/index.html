@@ -3,10 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA Survivor</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <title>AI Survivor</title>
 </head>
 <body>
-    <h1>IA Survivor</h1>
-    <script type="module" src="./js/main.js"></script>
+<main>
+    <div id="left">
+        <h2>Bienvenue dans IA Survivor</h2>
+        <p id="presentation">Bienvenue dans ce jeu de survie où chaque décision peut faire la différence entre la vie et la mort. Vous
+            êtes confronté à une situation dangereuse, proposez une solution réaliste et ingénieuse pour tenter de
+            survivre. À vous de jouer, votre destin est entre vos mains !</p>
+
+        <h3>Votre scénario :</h3>
+        <p id="selected-scenario">Scénario en cours de chargement ...</p>
+        <img id="pick-random-scenario" width="50" src="./img/random.webp" alt="">
+        <div id="input-container">
+            <div>
+                <label>
+                    Nom :
+                    <input id="input-name" placeholder="Votre prénom" type="text">
+                </label>
+            </div>
+
+            <div>
+                <label>
+                    <textarea placeholder="votre solution" id="solution-area"></textarea>
+                </label>
+            </div>
+
+            <button id="solution-btn-submit">Valider</button>
+        </div>
+    </div>
+    <div id="right">right</div>
+</main>
 </body>
+<script type="module" src="js/index.js"></script>
 </html>
